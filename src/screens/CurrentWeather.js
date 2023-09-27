@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import RowText from '../components/RowText';
 import { weatherType } from '../utils/weatherType';
 
-const CurrentWeather = () => {
+const CurrentWeather = ({ weatherData }) => {
   const {
     wrapper,
     container,
-    temp,
+    tempStyle,
     feels,
     highLowWrapper,
     highLow,
@@ -15,23 +15,33 @@ const CurrentWeather = () => {
     description,
     message
   } = styles;
+
+  const {
+    main: { temp, feels_like, temp_min, temp_max },
+    weather
+  } = weatherData;
+
+  const weatherCondition = weatherType[weather[0].main];
+
   return (
-    <SafeAreaView style={wrapper}>
+    <SafeAreaView
+      style={[wrapper, { backgroundColor: weatherCondition.backgroundColor }]}
+    >
       <View style={container}>
-        <Feather name='sun' size={100} color='yellow' />
-        <Text style={temp}>20</Text>
-        <Text style={feels}>Feels like 21</Text>
+        <Feather name={weatherCondition.icon} size={100} color='black' />
+        <Text style={tempStyle}>{`${Math.round(temp)}° C`}</Text>
+        <Text style={feels}>Feels like {`${Math.round(feels_like)}° C`}</Text>
         <RowText
-          firstText='High: 25 '
-          secondText='Low: 10'
+          firstText={`High: ${Math.round(temp_max)}° C `}
+          secondText={`Low: ${Math.round(temp_min)}° C`}
           wrapperStyle={highLowWrapper}
           firstTextStyle={highLow}
           secondTextStyle={highLow}
         />
       </View>
       <RowText
-        firstText="It's sunny"
-        secondText="It's perfect t-shirt weather"
+        firstText={weather[0].main}
+        secondText={weatherCondition.message}
         wrapperStyle={bodyWrapper}
         firstTextStyle={description}
         secondTextStyle={message}
@@ -50,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1a93ab'
   },
-  temp: {
+  tempStyle: {
     color: 'midnightblue',
     fontSize: 48
   },

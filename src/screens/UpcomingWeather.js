@@ -7,46 +7,7 @@ import {
 } from 'react-native';
 import ListItem from '../components/ListItem';
 
-const UpcomingWeather = () => {
-  const DATA = [
-    {
-      dt_txt: '2023-09-27 12:00:00',
-      main: {
-        temp_max: 28,
-        temp_min: 26
-      },
-      weather: [
-        {
-          main: 'Clear'
-        }
-      ]
-    },
-    {
-      dt_txt: '2023-09-27 15:00:00',
-      main: {
-        temp_max: 25,
-        temp_min: 23
-      },
-      weather: [
-        {
-          main: 'Clouds'
-        }
-      ]
-    },
-    {
-      dt_txt: '2023-09-27 18:00:00',
-      main: {
-        temp_max: 21,
-        temp_min: 19
-      },
-      weather: [
-        {
-          main: 'Rain'
-        }
-      ]
-    }
-  ];
-
+const UpcomingWeather = ({ weatherData }) => {
   const { container, image } = styles;
 
   return (
@@ -56,7 +17,7 @@ const UpcomingWeather = () => {
         style={image}
       >
         <FlatList
-          data={DATA}
+          data={weatherData}
           renderItem={({ item }) => (
             <ListItem
               dt_txt={item.dt_txt}

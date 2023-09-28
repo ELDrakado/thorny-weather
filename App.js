@@ -1,26 +1,29 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import Tabs from './src/components/Tabs';
+import ErrorItem from './src/components/ErrorItem';
 import { useGetWeather } from './src/hooks/useGetWeather';
 
 const App = () => {
   const [loading, error, weather] = useGetWeather();
 
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size={'large'} color={'blue'} />
-      </View>
-    );
-  }
-
-  if (weather && weather.list) {
+  if (weather && weather.list && !loading) {
     return (
       <NavigationContainer>
         <Tabs weather={weather} />
       </NavigationContainer>
     );
   }
+
+  return (
+    <View style={styles.container}>
+      {error ? (
+        <ErrorItem />
+      ) : (
+        <ActivityIndicator size={'large'} color={'blue'} />
+      )}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

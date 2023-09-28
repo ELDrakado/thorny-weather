@@ -21,14 +21,14 @@ const CurrentWeather = ({ weatherData }) => {
     weather
   } = weatherData;
 
-  const weatherCondition = weatherType[weather[0].main];
+  const weatherCondition = weatherType[weather[0]?.main];
 
   return (
     <SafeAreaView
       style={[wrapper, { backgroundColor: weatherCondition.backgroundColor }]}
     >
       <View style={container}>
-        <Feather name={weatherCondition.icon} size={100} color='black' />
+        <Feather name={weatherCondition?.icon} size={100} color='black' />
         <Text style={tempStyle}>{`${Math.round(temp)}° C`}</Text>
         <Text style={feels}>Feels like {`${Math.round(feels_like)}° C`}</Text>
         <RowText
@@ -41,7 +41,7 @@ const CurrentWeather = ({ weatherData }) => {
       </View>
       <RowText
         firstText={weather[0].main}
-        secondText={weatherCondition.message}
+        secondText={weatherCondition?.message}
         wrapperStyle={bodyWrapper}
         firstTextStyle={description}
         secondTextStyle={message}
@@ -57,8 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   wrapper: {
-    flex: 1,
-    backgroundColor: '#1a93ab'
+    flex: 1
   },
   tempStyle: {
     color: 'midnightblue',
@@ -81,8 +80,8 @@ const styles = StyleSheet.create({
     paddingLeft: 25,
     marginBottom: 40
   },
-  description: { fontSize: 48 },
-  message: { fontSize: 30 }
+  description: { fontSize: 43 },
+  message: { fontSize: 25 }
 });
 
 export default CurrentWeather;
